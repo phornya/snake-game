@@ -123,7 +123,7 @@ class SNAKE:
 
     def add_block(self):
         self.new_block = True
-
+        
     def play_crunch_sound(self):
         if self.crunch_sound:
             self.crunch_sound.play()

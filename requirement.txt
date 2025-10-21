@@ -1,0 +1,21 @@
+< We use: pygame
+    assets.png{
+        head.png
+        body.png
+        tial.png
+    }
+    Font{
+        PoetsenOne-Regular.ttf
+    }
+    snake{
+        food.py
+        game.py
+        setting.py
+        snake.py
+    }
+    sound{
+        crunch.wav       
+    }
+    main.py
+
+>
