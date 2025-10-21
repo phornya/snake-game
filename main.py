@@ -27,7 +27,7 @@ except Exception:
 main_game = Main(screen, game_font, apple_image=apple, sound_folder="sound")
 
 SCREEN_UPDATE = pygame.USEREVENT
-pygame.time.set_timer(SCREEN_UPDATE, 180)
+pygame.time.set_timer(SCREEN_UPDATE, 160)
 
 # Game loop
 while True:
