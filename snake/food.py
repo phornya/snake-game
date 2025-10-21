@@ -9,6 +9,14 @@ class Fruit:
         self.apple = apple_image
         self.random_position()
 
+    def random_position(self, snake_body=None):
+        while True:
+            pos = Vector2(random.randint(0, cell_number - 1), random.randint(0, cell_number - 1))
+            if snake_body and pos in snake_body:
+                continue
+            self.pos = pos
+            break
+        
     def draw_fruit(self):
         fruit_rect = pygame.Rect(int(self.pos.x * cell_size), int(self.pos.y * cell_size), cell_size, cell_size)
         try:
@@ -19,10 +27,4 @@ class Fruit:
         except Exception:
             pygame.draw.rect(self.screen, (255, 0, 0), fruit_rect)
 
-    def random_position(self, snake_body=None):
-        while True:
-            pos = Vector2(random.randint(0, cell_number - 1), random.randint(0, cell_number - 1))
-            if snake_body and pos in snake_body:
-                continue
-            self.pos = pos
-            break
+   
