@@ -50,24 +50,6 @@ class SNAKE:
         # images default
         self.head = self.head_right
         self.tail = self.tail_left
-    
-    def move(self):
-        new_head= self.body[0] + self.direction
-        if new_head.x >= cell_size:
-            new_head.x=0
-        if new_head.x < 0:
-            new_head.x = cell_size -1
-        if new_head.y >= cell_size:
-            new_head.y = 0
-        if new_head.y < 0: 
-            new_head.y= cell_size -1
-        
-        self.body.insert(0, new_head)
-
-        if not self.new_block:
-            self.body.pop()
-        else:
-            self.new_block
 
     def draw_snake(self):
         self.update_head_graphics()
