@@ -18,4 +18,11 @@
     }
     main.py
 
+    Interface{
+        button{
+            start
+            stop
+        }
+    }
+
 >

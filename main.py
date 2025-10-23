@@ -66,6 +66,18 @@ instructions_lines = [
     "Press Q to quit, I to toggle this help."
 ]
 
+def create_gameover_buttons(surface):
+    w = surface.get_width()
+    btn_w, btn_h = w // 4, 42
+    center_x = w // 2 - btn_w // 2
+    y_start = surface.get_height() // 2 + 40
+    restart_rect = pygame.Rect((center_x, y_start), (btn_w, btn_h))
+    menu_rect = pygame.Rect((center_x, y_start + 56), (btn_w, btn_h))
+    quit_rect = pygame.Rect((center_x, y_start + 112), (btn_w, btn_h))
+    return {"restart": restart_rect, "menu": menu_rect, "quit": quit_rect}
+
+gameover_buttons = create_gameover_buttons(screen)
+
 # Main loop with Menu
 running = True
 while running:
@@ -81,7 +93,7 @@ while running:
             if event.type == SCREEN_UPDATE:
                 main_game.update()
             if event.type == pygame.KEYDOWN:
-                # controls + restart with R
+                # controls
                 if main_game.is_game_over and event.key == pygame.K_r:
                     main_game.reset()
                 if not main_game.is_game_over:
@@ -100,8 +112,18 @@ while running:
                 running = False
                 break
 
+            # handle clicks on the buttons
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and main_game.is_game_over:
+                if gameover_buttons["restart"].collidepoint(mouse_pos):
+                    main_game.reset()
+                elif gameover_buttons["menu"].collidepoint(mouse_pos):
+                    state = "menu"
+                elif gameover_buttons["quit"].collidepoint(mouse_pos):
+                    running = False
+                    break
+
         else:
-            # Menu / instruction
+            #  instruction
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
                     main_game.reset()
@@ -160,14 +182,47 @@ while running:
     elif state == "playing":
         main_game.draw_elements()
 
-        # when game over, show overlay text and hint to return to menu
+
         if main_game.is_game_over:
-            #background
+            
             overlay = pygame.Surface(screen.get_size(), pygame.SRCALPHA)
-            overlay.fill((0, 0, 0, 120))
+            overlay.fill((0, 0, 0, 160))
             screen.blit(overlay, (0, 0))
+
+            score_text = ""
+            score_val = None
+
+            if hasattr(main_game, "score"):
+                try:
+                    score_val = getattr(main_game, "score")
+                except Exception:
+                    score_val = None
+            elif hasattr(main_game, "get_score"):
+                try:
+                    score_val = main_game.get_score()
+                except Exception:
+                    score_val = None
+            else:
+
+                try:
+                    score_val = len(main_game.snake.body) - 3 
+                except Exception:
+                    score_val = None
+
+            if score_val is not None:
+                score_text = f"Score: {score_val}"
+                pygame.display.set_caption(f"SNAKE GAME - Game Over - {score_text}")
+            else:
+                pygame.display.set_caption("SNAKE GAME - Game Over")
+
             draw_text_center(screen, "You Failed!", pygame.font.Font(None, 64), screen.get_height()//2 - 40)
-            draw_text_center(screen, "Press R play again or Esc to return menu", game_font, screen.get_height()//2 + 20)
+            draw_text_center(screen, "Click Restart or press R to play again", game_font, screen.get_height()//2 + 6)
+
+            # Draw buttons
+            for name, rect in gameover_buttons.items():
+                hovered = rect.collidepoint(mouse_pos)
+                label = name.capitalize()
+                draw_button(screen, rect, label, game_font, hovered=hovered)
 
     # update and display
     pygame.display.update()
