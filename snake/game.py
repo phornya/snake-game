@@ -36,7 +36,7 @@ class Main:
             self.snake.play_crunch_sound()
             self.score += 1
 
-        # if fruit spawns on snake (rare), move it
+        
         for block in self.snake.body:
             if block == self.fruit.pos:
                 self.fruit.random_position(self.snake.body)

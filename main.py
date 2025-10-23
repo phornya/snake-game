@@ -37,7 +37,7 @@ def draw_text_center(surface, text, font, y, color=(255, 255, 255)):
 
 def draw_button(surface, rect, text, font, hovered=False):
     border_color = (255, 255, 255)
-    bg_color = (100, 149, 237) if not hovered else (255, 165, 0)
+    bg_color = (100, 149, 237) if not hovered else (140, 219, 217)
     pygame.draw.rect(surface, bg_color, rect, border_radius=8)
     pygame.draw.rect(surface, border_color, rect, width=2, border_radius=8)
     txt = font.render(text, True, (255, 255, 255))
@@ -125,7 +125,7 @@ while running:
 
     # Render on state
     if state == "menu":
-        screen.fill((12, 12, 12))
+        screen.fill((42, 212, 116))
         draw_text_center(screen, "SNAKE GAME !", pygame.font.Font(None, 72), screen.get_height()//4)
         draw_text_center(screen, "get start funny game", pygame.font.Font(None, 24), screen.get_height()//4 + 50)
 
