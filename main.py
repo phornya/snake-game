@@ -51,7 +51,7 @@ def create_buttons(surface):
     start_rect = pygame.Rect((w//2 - btn_w//2, h//2 - 20 - btn_h), (btn_w, btn_h))
     instr_rect = pygame.Rect((w//2 - btn_w//2, h//2 + 30 - btn_h), (btn_w, btn_h))
     quit_rect = pygame.Rect((w//2 - btn_w//2, h//2 + 80 - btn_h), (btn_w, btn_h))
-    return {"start": start_rect, "instructions": instr_rect, "stop": quit_rect}
+    return {"start": start_rect, "instructions": instr_rect, "quit game": quit_rect}
 
 buttons = create_buttons(screen)
 state = "menu"
@@ -74,7 +74,7 @@ def create_gameover_buttons(surface):
     restart_rect = pygame.Rect((center_x, y_start), (btn_w, btn_h))
     menu_rect = pygame.Rect((center_x, y_start + 56), (btn_w, btn_h))
     quit_rect = pygame.Rect((center_x, y_start + 112), (btn_w, btn_h))
-    return {"restart": restart_rect, "menu": menu_rect, "quit": quit_rect}
+    return {"restart": restart_rect, "menu": menu_rect, "quit game": quit_rect}
 
 gameover_buttons = create_gameover_buttons(screen)
 
@@ -118,7 +118,7 @@ while running:
                     main_game.reset()
                 elif gameover_buttons["menu"].collidepoint(mouse_pos):
                     state = "menu"
-                elif gameover_buttons["quit"].collidepoint(mouse_pos):
+                elif gameover_buttons["quit game"].collidepoint(mouse_pos):
                     running = False
                     break
 
@@ -141,7 +141,7 @@ while running:
                 elif buttons["instructions"].collidepoint(mouse_pos):
                     show_instructions = True
                     state = "instructions"
-                elif buttons["stop"].collidepoint(mouse_pos):
+                elif buttons["quit game"].collidepoint(mouse_pos):
                     running = False
                     break
 
@@ -155,8 +155,8 @@ while running:
         for name, rect in buttons.items():
             hovered = rect.collidepoint(mouse_pos)
             label = name.capitalize()
-            if name == "stop":
-                label = "Stop"
+            if name == "quit game":
+                label = "Quit game"
             if name == "instructions":
                 label = "Instructions"
             draw_button(screen, rect, label, game_font, hovered=hovered)
