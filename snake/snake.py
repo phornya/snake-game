@@ -2,7 +2,7 @@ import pygame
 from pygame.math import Vector2
 from .settings import cell_size
 
-# --- Grid setup ---
+#Grid setup
 try:
     from .settings import cell_number
     CELL_NUMBER_X = CELL_NUMBER_Y = cell_number
@@ -18,7 +18,7 @@ class SNAKE:
         self.direction = Vector2(1, 0)
         self.new_block = False
 
-        # --- Load images ---
+        #Load images
         try:
             self.head_up = pygame.image.load("assets/head_up.png").convert_alpha()
             self.head_down = pygame.image.load("assets/head_down.png").convert_alpha()
@@ -60,7 +60,7 @@ class SNAKE:
         except Exception:
             self.crunch_sound = None
 
-    # --- Helpers ---
+    #Helpers
     def _wrap_position(self, vec):
         return Vector2(vec.x % CELL_NUMBER_X, vec.y % CELL_NUMBER_Y)
 
@@ -78,7 +78,7 @@ class SNAKE:
 
         return Vector2(int(diff.x), int(diff.y))
 
-    # --- Draw ---
+    #Draw
     def draw_snake(self):
         self.update_head_graphics()
         self.update_tail_graphics()
@@ -136,7 +136,7 @@ class SNAKE:
         elif tail_relation == Vector2(0, -1):
             self.tail = self.tail_up
 
-    # --- Movement ---
+    #Movement
     def move_snake(self):
         body_copy = self.body[:]
         new_head = body_copy[0] + self.direction
